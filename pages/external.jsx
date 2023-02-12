@@ -1,10 +1,11 @@
+import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import React, { useState } from 'react';
 import { Button } from 'reactstrap';
-import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 
-import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import Highlight from '../components/Highlight';
+import Loading from '../components/Loading';
+import ResumeTemplate from '../components/ResumeTemplate';
 
 function External() {
   const [state, setState] = useState({ isLoading: false, response: undefined, error: undefined });
@@ -65,6 +66,7 @@ function External() {
           </div>
         )}
       </div>
+      <ResumeTemplate/>
     </>
   );
 }

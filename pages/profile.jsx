@@ -1,10 +1,10 @@
-import React from 'react';
-import { Row, Col } from 'reactstrap';
 import { useUser, withPageAuthRequired } from '@auth0/nextjs-auth0/client';
+import React from 'react';
+import { Col, Row } from 'reactstrap';
 
-import Loading from '../components/Loading';
 import ErrorMessage from '../components/ErrorMessage';
 import Highlight from '../components/Highlight';
+import Loading from '../components/Loading';
 
 function Profile() {
   const { user, isLoading } = useUser();

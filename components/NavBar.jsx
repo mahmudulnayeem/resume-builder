@@ -40,8 +40,8 @@ const NavBar = () => {
                   Home
                 </PageLink>
               </NavItem>
-              {user && (<></>
-               /*  <>
+              {user && (
+                 <>
                   <NavItem>
                     <PageLink href="/csr" className="nav-link" testId="navbar-csr">
                       Client-side rendered page
@@ -57,7 +57,7 @@ const NavBar = () => {
                       External API
                     </PageLink>
                   </NavItem>
-                </> */
+                </>
               )}
             </Nav>
             <Nav className="d-none d-md-block" navbar>
@@ -144,7 +144,7 @@ const NavBar = () => {
                 <NavItem id="qsLogoutBtn">
                   <AnchorLink
                     href="/api/auth/logout"
-                    className="btn btn-link p-0"
+                    className="btn btn-link p-0 text-decoration-none"
                     icon="power-off"
                     testId="navbar-logout-mobile">
                     Log out
