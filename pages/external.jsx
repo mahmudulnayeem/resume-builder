@@ -1,6 +1,6 @@
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
 import React, { useState } from 'react';
-import { Button } from 'reactstrap';
+import { Button } from '../components/ui/Button';
 
 import ErrorMessage from '../components/ErrorMessage';
 import Highlight from '../components/Highlight';
@@ -52,7 +52,7 @@ function External() {
           for more info).
           </p>
         </div>
-        <Button color="primary" className="mt-5" onClick={e => handle(e, callApi)} data-testid="external-action">
+        <Button intent='danger' onClick={e => handle(e, callApi)} data-testid="external-action">
           Ping API
         </Button>
       </div>

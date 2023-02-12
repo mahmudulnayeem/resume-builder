@@ -74,7 +74,7 @@ const NavBar = () => {
               )}
               {user && (
                 <UncontrolledDropdown nav inNavbar data-testid="navbar-menu-desktop">
-                  <DropdownToggle nav caret id="profileDropDown">
+                  <DropdownToggle nav id="profileDropDown">
                     <img
                       src={user.picture}
                       alt="Profile"
