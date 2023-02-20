@@ -1,8 +1,12 @@
+import { useUser } from '@auth0/nextjs-auth0/client';
 import React, { useState } from 'react';
-
+import { BsPlusSquare } from 'react-icons/bs';
+import { Button } from './ui/Button';
+import { Input } from './ui/Input';
 const ResumeForm = () => {
+  const {user,isLoading}= useUser()
   const [personalDetails, setPersonalDetails] = useState({
-    name: '',
+    name: `${user?.given_name} ${user?.family_name}`,
     email: '',
     phone: ''
   });
@@ -45,115 +49,179 @@ const ResumeForm = () => {
     console.log(workExperience);
   };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <section>
-        <h2>Personal Details</h2>
-        <input
-          type="text"
-          name="name"
-          value={personalDetails.name}
-          onChange={(e) => handleChange(e, null, 'personalDetails')}
-          placeholder="Name"
+if(isLoading) return<>Loading</>
+
+return (
+
+    <form onSubmit={handleSubmit} className=' p-4 rounded-md space-y-3 shadow-lg '>
+      <section className='mb-10'>
+      <h2 className='font-bold text-center text-emerald-500 text-xl mb-6'>Personal Details</h2>
+        <div className='flex flex-col'>
+        <Input
+        id='name'
+        type="text"
+        name="name"
+        intent='success'
+        label='Name'
+        required
+        value={personalDetails?.name||""}
+        onChange={(e) => handleChange(e, null, 'personalDetails')}
+        placeholder="jon doe"
         />
-        <input
+        </div>
+        <div>
+          <div className=''>
+          <Input
+          intent='success'
+          label='Email'
+          id='email'
           type="email"
           name="email"
           value={personalDetails.email}
           onChange={(e) => handleChange(e, null, 'personalDetails')}
-          placeholder="Email"
+          placeholder="youremail@gmail.com"
         />
-        <input
-          type="tel"
-          name="phone"
-          value={personalDetails.phone}
-          onChange={(e) => handleChange(e, null, 'personalDetails')}
-          placeholder="Phone"
-        />
+          </div>
+        </div>
+        <Input 
+        intent='success'
+        dashed 
+        type="tel"
+        label='Phone'
+        id='phone'
+        name="phone"
+        value={personalDetails.phone}
+        onChange={(e) => handleChange(e, null, 'personalDetails')}
+        placeholder="+800 1234567891" />
       </section>
-      <section>
-        <h2>Education</h2>
-        {education.map((edu, index) => (
-          <div key={index}>
-            <input
+      <section className='mt-10'>
+        <h2 className='font-bold text-center text-emerald-500 text-xl mb-6'>Education</h2>
+        {education.map((edu, index) => (<>
+          <div key={index} className='grid sm:grid-cols-2 grid-cols-1 sm:gap-2'>
+            <Input
               type="text"
               name="degree"
+              label='Degree'
               value={edu.degree}
               onChange={(e) => handleChange(e, index, 'education')}
               placeholder="Degree"
+              intent='success'
             />
-            <input
+            <Input
               type="text"
               name="institute"
+              label='Institute'
               value={edu.institute}
               onChange={(e) => handleChange(e, index, 'education')}
               placeholder="Institute"
+              intent='success'
             />
-            <input
-              type="text"
+            <Input
+              type="date"
               name="startYear"
+              label='Start Year'
+              dashed
               value={edu.startYear}
               onChange={(e) => handleChange(e, index, 'education')}
               placeholder="Start Year"
+              intent='success'
             />
-            <input
-              type="text"
+            <Input
+              type='date'
               name="endYear"
+              label='End Year'
+              dashed
               value={edu.endYear}
               onChange={(e) => handleChange(e, index, 'education')}
               placeholder="End Year"
+              intent='success'
             />
           </div>
+          {education.length-1!==index&&<hr class="w-96 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"/>}
+            </>
         ))}
-        <button type="button" onClick={() => handleAdd('education')}>
-          Add Education
-        </button>
+        <div className='mt-2 flex justify-end '>
+          <Button
+            intent='success'
+            onClick={() => handleAdd('education')}
+          >
+            <BsPlusSquare/>
+         <span>Add Education</span>
+        </Button>
+          </div>
       </section>
       <section>
-        <h2>Work Experience</h2>
+        <h2 className='font-bold text-center text-emerald-500 text-xl mb-6'>Work Experience</h2>
         {workExperience.map((work, index) => (
-          <div key={index}>
-            <input
+        <>  <div key={index}>
+            <div className='grid sm:grid-cols-2 grid-cols-1 gap-2'>
+
+            
+            <Input
               type="text"
               name="position"
+              label='Position'
+              id='position'
+              intent='success'
               value={work.position}
               onChange={(e) => handleChange(e, index, 'workExperience')}
               placeholder="Position"
             />
-            <input
+            <Input
               type="text"
               name="company"
+              id='company'
+              intent='success'
+              label='Company / Institute'
               value={work.company}
               onChange={(e) => handleChange(e, index, 'workExperience')}
-              placeholder="Company"
+              placeholder="xyz company / abc institute"
             />
-            <input
-              type="text"
+            <Input
+              type="date"
               name="startYear"
+              dashed
+              intent='success'
+              label='Start Year'
               value={work.startYear}
               onChange={(e) => handleChange(e, index, 'workExperience')}
               placeholder="Start Year"
             />
-            <input
-              type="text"
+            <Input
+              type="date"
+              dashed
+              intent='success'
+              label='End Year'
               name="endYear"
               value={work.endYear}
               onChange={(e) => handleChange(e, index, 'workExperience')}
               placeholder="End Year"
-            />
+            /></div>
+            <div className='mt-3'>
+          <label htmlFor="area" className='text-md font-semibold'>Description</label>
             <textarea
-              name="description"
-              value={work.description}
-              onChange={(e) => handleChange(e, index, 'workExperience')}
-              placeholder="Description"
+            className='border-2 border-teal-600 w-full  focus:outline-none rounded-md p-2'
+            name="description"
+            value={work.description}
+            onChange={(e) => handleChange(e, index, 'workExperience')}
+            placeholder="Description..."
             />
+            </div>
           </div>
+         {workExperience.length-1!==index&& <hr class="w-96 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"/>}</>
         ))}
-        <button type="button" onClick={() => handleAdd('workExperience')}>
-          Add Work Experience
-        </button>
+        <div className='mt-2 flex justify-end '>
+          <Button
+            intent='success'
+            onClick={() => handleAdd('workExperience')}
+          >
+            <BsPlusSquare/>
+         <span>Add Work Experience</span>
+        </Button>
+          </div>
+        
       </section>
-      <button type="submit">Submit</button>
+      <Button intent='success' type="submit">Submit</Button>
     </form>
   );
 };

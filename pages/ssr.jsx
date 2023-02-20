@@ -1,9 +1,13 @@
-import React from 'react';
 import { withPageAuthRequired } from '@auth0/nextjs-auth0';
+import { useUser } from '@auth0/nextjs-auth0/client';
+import React from 'react';
 
 import Highlight from '../components/Highlight';
+import ResumeForm from '../components/ResumeForm';
 
 export default function SSRPage({ user }) {
+  const {isLoading}=useUser()
+  if(isLoading)return<>Loading...</>
   return (
     <>
       <div className="mb-5" data-testid="ssr">
@@ -20,6 +24,7 @@ export default function SSRPage({ user }) {
           </p>
         </div>
       </div>
+     <ResumeForm/>
       <div className="result-block-container" data-testid="ssr-json">
         <div className="result-block">
           <h6 className="muted">User prop</h6>

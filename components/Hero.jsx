@@ -1,12 +1,13 @@
 import React from 'react';
+import WithIncrement from './HOC/WithIncrement';
 
 import Logo from './Logo';
 
-const Hero = () => (
+const Hero = ({count}) => (
   <div className="hero my-5 text-center" data-testid="hero">
     <Logo height={300} width={300} />
     <h1 className="mb-4" data-testid="hero-title">
-     Resume Builder
+     Resume Builder {count}
     </h1>
 
     <p className="lead" data-testid="hero-lead">
@@ -15,4 +16,4 @@ const Hero = () => (
   </div>
 );
 
-export default Hero;
+export default WithIncrement(Hero);
